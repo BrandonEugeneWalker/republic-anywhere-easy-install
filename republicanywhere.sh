@@ -22,9 +22,14 @@ then
 	exit 0
 fi
 
-read -p "Continue? (Y/N): " response
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) response="YES"
+        No ) response="NO"
+    esac
+done
 
-if ["$response" == 'YES']
+if ["$response" == "YES"]
 then
 	[ "$UID" -eq 0] || exec sudo bash "$0" "$@"
 	exec clear
