@@ -5,6 +5,8 @@ forumurl="https://forums.republicwireless.com/t/beta-member-support-only-how-to-
 
 greeting="Welcome, this script will install $brand on Ubuntu and Debian distributions as well as it's dependencies. APT Warnings can be ignored.
 
+outputfile="republicscriptoutput.txt"
+
 The following actions will be performed:
  * Check for libgconf-2-4.
  * Install libgconf-2-4 if necessary.
@@ -12,6 +14,12 @@ The following actions will be performed:
  * Add the $brand key to your keys.
  * Refresh the apt package list.
  * Install $brand."
+
+if [ "$UID" -ne 0 ]
+	then
+		echo "Script not running as root, password required."
+		exec sudo bash "$0" "$@"
+	fi
 
 echo "$greeting"
 
@@ -22,17 +30,10 @@ then
 	exit 0
 fi
 
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) response="YES"
-        No ) response="NO"
-    esac
-done
+read -r -p "Would you like to continue? (Y/N):" response
 
-if ["$response" == "YES"]
+if [[ "$response" == [yY]* ]]
 then
-	[ "$UID" -eq 0] || exec sudo bash "$0" "$@"
-	exec clear
 	libgconfpresent=$(apt -qq --installed list libgconf-2-4)
 	
 	if [ ! -n "$libgconfpresent" ]
@@ -41,32 +42,27 @@ then
 	else
 		echo "libgconf-2-4 is missing and will be installed."
 		echo "Installing libgconf-2-4..."
-		exec sudo apt-get install -y libgconf-2-4
-		exec clear
+		exec -c sudo apt-get install -y libgconf-2-4 &> /dev/null
 	fi
 	
 	echo "Fetching $brand .deb package..."
-	exec sudo sh -c 'echo "deb [arch=amd64] https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian main main" > /etc/apt/sources.list.d/republicanywhere.list'
-	exec clear
+	exec -c echo "deb [arch=amd64] https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian main main" | tee /etc/apt/sources.list.d/republicanywhere.list
 	
 	echo "Adding $brand key to your keys..."
-	exec wget -O - https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public | sudo apt-key add -
-	exec clear
+	exec -c wget -O - https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public | sudo apt-key add - &> /dev/null
 	
 	echo "Updating package list..."
-	exec sudo apt update
-	exec clear
+	exec -c sudo apt-get update &> /dev/null
 	
 	echo "Installing $brand..."
-	exec sudo apt-get install -y republicanywhere
-	exec clear
+	exec -c sudo apt-get install -y republicanywhere &> /dev/null
 	echo "Install completed..." "If $brand does not appear in your app menu restart your computer." "Exiting..."
 	exit 0
 else
-	exec clear
 	echo "Permission not granted terminating script."
 	exit 0
 fi
+echo "End of file reached, the script did not run correctly.
 exit 0
 	
 	
