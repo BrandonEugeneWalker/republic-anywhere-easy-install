@@ -47,7 +47,7 @@ then
 	exec -c echo "deb [arch=amd64] https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian main main" | tee /etc/apt/sources.list.d/republicanywhere.list !> /dev/null
 	
 	echo "Adding $brand key to your keys..."
-	exec -c wget -O - https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public | apt-key add -
+	exec -c wget -q -O - https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public | apt-key add -
 	
 	echo "Updating package list and installing $brand."
 	exec -c apt-get -qq update 1> /dev/null & apt-get -qq install -y republicanywhere 1> /dev/null
