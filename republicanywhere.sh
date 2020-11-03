@@ -50,7 +50,7 @@ then
 	exec -c wget -q -O - https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public | apt-key add -
 	
 	echo "Updating package list and installing $brand."
-	exec -c apt-get -qq update 1> /dev/null & apt-get -qq install -y republicanywhere 1> /dev/null
+	exec -c apt-get -qq update 1> /dev/null && apt-get -qq install -y republicanywhere 1> /dev/null
 	
 	echo "Install completed..." "If $brand does not appear in your app menu restart your computer."
 	echo "If you have any issue or questions the home of this script can be found at:"
