@@ -42,27 +42,23 @@ then
 	else
 		echo "libgconf-2-4 is missing and will be installed."
 		echo "Installing libgconf-2-4..."
-		exec -c sudo apt-get install -y libgconf-2-4 &> /dev/null
+		exec -c apt-get install -y libgconf-2-4 &> /dev/null
 	fi
 	
 	echo "Fetching $brand .deb package..."
-	exec -c echo "deb [arch=amd64] https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian main main" | tee /etc/apt/sources.list.d/republicanywhere.list
+	exec -c echo "deb [arch=amd64] https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian main main" | tee /etc/apt/sources.list.d/republicanywhere.list &> /dev/null
 	
 	echo "Adding $brand key to your keys..."
-	exec -c wget -O - https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public | sudo apt-key add - &> /dev/null
+	exec -c wget -O - https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public | apt-key add - &> /dev/null
 	
-	echo "Updating package list..."
-	exec -c sudo apt-get update &> /dev/null
+	echo "Updating package list and installing $brand."
+	exec -c apt-get update & apt-get install -y republicanywhere &> /dev/null
 	
-	echo "Installing $brand..."
-	exec -c sudo apt-get install -y republicanywhere &> /dev/null
 	echo "Install completed..." "If $brand does not appear in your app menu restart your computer." "Exiting..."
-	exit 0
 else
 	echo "Permission not granted terminating script."
 	exit 0
 fi
-echo "End of file reached, the script did not run correctly.
 exit 0
 	
 	
