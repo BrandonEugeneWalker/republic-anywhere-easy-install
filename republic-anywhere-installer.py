@@ -30,10 +30,13 @@ def close_apt_cache(cache):
     return
 
 def commit_apt_changes(cache):
+    saved = sys.stdout
+    sys.stdout = open('/dev/null', 'w')
     try:
         cache.commit()
     except Exception as arg:
         print >> sys.stderr, 'Sorry, package instillation failed. Error: [{err}]'.format(err=str(arg))
+    sys.stdout = saved
     return
 
 def check_if_anywhere_installed():
