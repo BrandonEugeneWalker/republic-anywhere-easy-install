@@ -71,7 +71,7 @@ def create_apt_source_file():
 def add_apt_key():
     command_text = "sudo apt-key adv --fetch-keys https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public"
     command_text_list = command_text.split(' ')
-    subprocess.run(command_text_list)
+    subprocess.run(command_text_list, stdout=subprocess.DEVNULL)
     return
 
 def install_republic_anywhere(cache):
@@ -104,12 +104,21 @@ The following actions will be performed:
  * Install libgconf-2-4 if necessary.
  * Install Republic Anywhere"""
     print(greeting)
+    return
 
 def print_exit_message():
     exit_message = """Republic Anywhere was sucessfully installed on your system.
     If you have any issues you can find help by going to:
     https://forums.republicwireless.com/t/beta-member-support-only-how-to-install-republic-anywhere-on-linux/"""
     print(exit_message)
+    return
+
+def print_whitespace():
+    whitespace = """
+
+    """
+    print(whitespace)
+    return
 
 def get_user_permission():
     user_input = input('Would you like to continue? (yes/no):')
@@ -125,18 +134,24 @@ def main():
         exit(0)
     
     print_greeting()
+    print_whitespace()
 
     is_permission_granted = get_user_permission()
     if not is_permission_granted:
         print('Permission not granted, aborting install.')
         exit(0)
     
+    print_whitespace()
     print('Creating apt source file for Republic Anywhere.')
     create_apt_source_file()
+
     print('Fetching and adding apt key for Republic Anywhere.')
     add_apt_key()
+
+    print_whitespace()
     finalize_install()
 
+    print_whitespace()
     print_exit_message()
     return
 
