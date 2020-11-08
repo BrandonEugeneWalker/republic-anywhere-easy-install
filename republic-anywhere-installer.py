@@ -53,20 +53,22 @@ def install_libgconf(cache):
         print('{package_name} is already installed, skipping this step.'.format(package_name = package_name))
     else:
         package.mark_install()
-
     return
 
 def create_apt_source_file():
     apt_source_contents = 'deb [arch=amd64] https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian main main'
+    file_location = '/etc/apt/sources.list.d/republicanywhere.list'
+    with open(file_location, 'w') as republic_apt_source:
+        republic_apt_source.write(apt_source_contents)
     return
 
 def add_apt_key():
+    command_text = "wget -q -O - https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public | apt-key add -"
+    command_text_list = command_text.split(' ')
+    subprocess.run(command_text_list, stdout=subprocess.DEVNULL)
     return
 
-def update_apt_packages():
-    return
-
-def install_republic_anywhere():
+def install_republic_anywhere(cache):
     return
 
 def verify_install():
