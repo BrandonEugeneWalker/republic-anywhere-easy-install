@@ -69,7 +69,7 @@ def create_apt_source_file():
     return
 
 def add_apt_key():
-    command_text = "wget -q -O - https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public | apt-key add -"
+    command_text = "sudo apt-key adv --fetch-keys https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public"
     command_text_list = command_text.split(' ')
     subprocess.run(command_text_list)
     return
