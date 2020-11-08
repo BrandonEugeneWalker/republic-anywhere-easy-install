@@ -123,6 +123,8 @@ def main():
         print('Republic Anywhere is already present on your system, aborting install.')
         exit(0)
     
+    print_greeting()
+
     is_permission_granted = get_user_permission()
     if not is_permission_granted:
         print('Permission not granted, aborting install.')
@@ -133,6 +135,8 @@ def main():
     print('Fetching and adding apt key for Republic Anywhere.')
     add_apt_key()
     finalize_install()
+
+    print_exit_message()
     return
 
 if __name__ == '__main__':
