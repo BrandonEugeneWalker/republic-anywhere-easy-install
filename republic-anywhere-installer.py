@@ -71,7 +71,7 @@ def create_apt_source_file():
 def add_apt_key():
     command_text = "wget -q -O - https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public | apt-key add -"
     command_text_list = command_text.split(' ')
-    subprocess.run(command_text_list, stdout=subprocess.DEVNULL)
+    subprocess.run(command_text_list)
     return
 
 def install_republic_anywhere(cache):
