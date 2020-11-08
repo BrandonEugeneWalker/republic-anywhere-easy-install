@@ -109,6 +109,7 @@ def print_exit_message():
     exit_message = """Republic Anywhere was sucessfully installed on your system.
     If you have any issues you can find help by going to:
     https://forums.republicwireless.com/t/beta-member-support-only-how-to-install-republic-anywhere-on-linux/"""
+    print(exit_message)
 
 def get_user_permission():
     user_input = input('Would you like to continue? (yes/no):')
