@@ -97,7 +97,7 @@ def print_greeting():
     greeting = """Welcome, this program will install Republic Anywhere on Ubuntu and Debian distributions as well as it's dependencies.
 
 The following actions will be performed:
- * Fetch the $brand .deb package.
+ * Fetch the Republic Anywhere .deb package.
  * Add the Republic Anywhere key to your keys.
  * Refresh the apt package list.
  * Check for libgconf-2-4.
@@ -112,8 +112,8 @@ def print_exit_message():
 
 def get_user_permission():
     user_input = input('Would you like to continue? (yes/no):')
-    lower_case_input = user_input.lower
-    is_permission_granted = lower_case_input == 'yes' or lower_case_input == 'y'
+    lower_case_input = user_input.lower()
+    is_permission_granted = (lower_case_input == 'yes' or lower_case_input == 'y')
     return is_permission_granted
     
 
