@@ -39,8 +39,8 @@ def commit_apt_changes(cache):
 def check_if_anywhere_installed():
     cache = get_apt_cache()
     package_name = 'republicanywhere'
-    package = cache[package_name]
     try:
+        package = cache[package_name]
         results = package.is_installed()
         return results
     except KeyError:
