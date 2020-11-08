@@ -85,7 +85,7 @@ def install_republic_anywhere(cache):
         package.mark_install()
     return
 
-def finalize_install(cache):
+def finalize_install():
     cache = get_apt_cache()
     install_libgconf(cache)
     install_republic_anywhere(cache)
