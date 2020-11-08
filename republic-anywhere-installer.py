@@ -15,9 +15,6 @@ import sys
 import subprocess
 import apt
 
-def build_messages():
-    return
-
 def check_root_access():
     is_root = os.geteuid() == 0
     return is_root
@@ -43,7 +40,13 @@ def check_if_anywhere_installed():
     cache = get_apt_cache()
     package_name = 'republicanywhere'
     package = cache[package_name]
-    return package.is_installed
+    try:
+        results = package.is_installed()
+        return results
+    except Exception:
+        return False
+
+
 
 def install_libgconf(cache):
     package_name = 'libgconf-2-4'
