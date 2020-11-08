@@ -43,7 +43,7 @@ def check_if_anywhere_installed():
     try:
         results = package.is_installed()
         return results
-    except Exception:
+    except KeyError:
         return False
 
 
