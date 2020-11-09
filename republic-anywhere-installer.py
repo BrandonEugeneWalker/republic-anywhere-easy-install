@@ -89,6 +89,7 @@ def finalize_install():
     cache = get_apt_cache()
     install_libgconf(cache)
     install_republic_anywhere(cache)
+    print_whitespace()
     commit_apt_changes(cache)
     close_apt_cache(cache)
     return
@@ -139,15 +140,12 @@ def main():
         print('Permission not granted, aborting install.')
         exit(0)
     
-    print_whitespace()
     print('Creating apt source file for Republic Anywhere.')
     create_apt_source_file()
 
-    print_whitespace()
     print('Fetching and adding apt key for Republic Anywhere.')
     add_apt_key()
 
-    print_whitespace()
     finalize_install()
 
     print_whitespace()
