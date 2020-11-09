@@ -30,13 +30,10 @@ def close_apt_cache(cache):
     return
 
 def commit_apt_changes(cache):
-    saved = sys.stdout
-    sys.stdout = open('/dev/null', 'w')
     try:
         cache.commit()
     except Exception as arg:
         print >> sys.stderr, 'Sorry, package instillation failed. Error: [{err}]'.format(err=str(arg))
-    sys.stdout = saved
     return
 
 def check_if_anywhere_installed():
@@ -72,9 +69,14 @@ def create_apt_source_file():
     return
 
 def add_apt_key():
+    saved_out = sys.stdout
+    saved_err = sys.stderr
+    sys.stdout = open('/dev/null', 'w')
+    sys.stderr = open('/dev/null', 'w')
     command_text = "sudo apt-key adv --fetch-keys https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public"
     command_text_list = command_text.split(' ')
-    subprocess.run(command_text_list, stdout=subprocess.DEVNULL)
+    subprocess.run(command_text_list)
+    sys.stdout = saved_out
     return
 
 def install_republic_anywhere(cache):
