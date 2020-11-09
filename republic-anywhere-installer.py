@@ -1,5 +1,8 @@
 #/usr/local/bin/python3.8
 """
+Republic Anywhere is a @Copyright of Republic Wireless
+The code in this script is @Copyright Brandon Walker (Burusutazu) 2020
+
 This python file will be responsible for breaking down and installing Republic Anywhere.
 A variety of steps must be completed, such as:
  * Getting root access if the file is not run as root.
