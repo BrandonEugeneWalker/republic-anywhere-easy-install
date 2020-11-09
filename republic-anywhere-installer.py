@@ -1,5 +1,4 @@
-
-#/usr/local/bin/python3.8.6
+#/usr/local/bin/python3.8
 """
 This python file will be responsible for breaking down and installing Republic Anywhere.
 A variety of steps must be completed, such as:
@@ -15,9 +14,11 @@ import sys
 import subprocess
 import apt
 
+
 def check_root_access():
     is_root = os.geteuid() == 0
     return is_root
+
 
 def get_apt_cache():
     cache = apt.cache.Cache()
@@ -25,9 +26,11 @@ def get_apt_cache():
     cache.open()
     return cache
 
+
 def close_apt_cache(cache):
     cache.close()
     return
+
 
 def commit_apt_changes(cache):
     try:
@@ -43,6 +46,7 @@ https://forums.republicwireless.com/t/beta-member-support-only-how-to-install-re
         exit(0)
     return
 
+
 def check_if_anywhere_installed():
     cache = get_apt_cache()
     package_name = 'republicanywhere'
@@ -52,7 +56,6 @@ def check_if_anywhere_installed():
         return results
     except KeyError:
         return False
-
 
 
 def install_libgconf(cache):
@@ -68,6 +71,7 @@ def install_libgconf(cache):
         package.mark_install()
     return
 
+
 def create_apt_source_file():
     apt_source_contents = 'deb [arch=amd64] https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian main main'
     file_location = '/etc/apt/sources.list.d/republicanywhere.list'
@@ -75,11 +79,13 @@ def create_apt_source_file():
         republic_apt_source.write(apt_source_contents)
     return
 
+
 def add_apt_key():
     command_text = "sudo apt-key adv --fetch-keys https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public"
     command_text_list = command_text.split(' ')
     subprocess.run(command_text_list, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return
+
 
 def install_republic_anywhere(cache):
     package_name = 'republicanywhere'
@@ -92,6 +98,7 @@ def install_republic_anywhere(cache):
         package.mark_install()
     return
 
+
 def finalize_install():
     cache = get_apt_cache()
     install_libgconf(cache)
@@ -100,6 +107,7 @@ def finalize_install():
     commit_apt_changes(cache)
     close_apt_cache(cache)
     return
+
 
 def print_greeting():
     greeting = """Welcome, this program will install Republic Anywhere on Ubuntu and Debian distributions as well as it's dependencies.
@@ -114,6 +122,7 @@ The following actions will be performed:
     print(greeting)
     return
 
+
 def print_exit_message():
     exit_message = """Republic Anywhere was sucessfully installed on your system.
 If you have any issues you can find help by going to:
@@ -121,10 +130,12 @@ https://forums.republicwireless.com/t/beta-member-support-only-how-to-install-re
     print(exit_message)
     return
 
+
 def print_whitespace():
     whitespace = '\n'
     print(whitespace)
     return
+
 
 def get_user_permission():
     user_input = input('Would you like to continue? (yes/no):')
@@ -158,6 +169,7 @@ def main():
     print_whitespace()
     print_exit_message()
     return
+
 
 if __name__ == '__main__':
     main()
