@@ -41,7 +41,7 @@ def check_if_anywhere_installed():
     package_name = 'republicanywhere'
     try:
         package = cache[package_name]
-        results = package.is_installed()
+        results = package.is_installed
         return results
     except KeyError:
         return False
