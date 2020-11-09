@@ -35,11 +35,11 @@ def commit_apt_changes(cache):
     except Exception as arg:
         sys.stderr.write('Sorry, package instillation failed. Error: [{err}]'.format(err=str(arg)))
         failure_message = """
-        Install failed...
-        If the error relates to a file lock simply try again later. Another system resource is using the package manager.
-        Additional help can be found at:
-        https://forums.republicwireless.com/t/beta-member-support-only-how-to-install-republic-anywhere-on-linux/"""
-        print(failure_message)
+Install failed...
+If the error relates to a file lock simply try again later. Another system resource is using the package manager.
+Additional help can be found at:
+https://forums.republicwireless.com/t/beta-member-support-only-how-to-install-republic-anywhere-on-linux/"""
+        sys.stderr.write(failure_message)
         exit(0)
     return
 
