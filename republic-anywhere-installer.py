@@ -69,14 +69,9 @@ def create_apt_source_file():
     return
 
 def add_apt_key():
-    saved_out = sys.stdout
-    saved_err = sys.stderr
-    sys.stdout = open('/dev/null', 'w')
-    sys.stderr = open('/dev/null', 'w')
     command_text = "sudo apt-key adv --fetch-keys https://s3.amazonaws.com/files.republicwireless.com/public/apps/anywhere/debian/key/public"
     command_text_list = command_text.split(' ')
-    subprocess.run(command_text_list)
-    sys.stdout = saved_out
+    subprocess.run(command_text_list, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return
 
 def install_republic_anywhere(cache):
@@ -119,9 +114,7 @@ https://forums.republicwireless.com/t/beta-member-support-only-how-to-install-re
     return
 
 def print_whitespace():
-    whitespace = """
-
-    """
+    whitespace = '\n'
     print(whitespace)
     return
 
@@ -150,6 +143,7 @@ def main():
     print('Creating apt source file for Republic Anywhere.')
     create_apt_source_file()
 
+    print_whitespace()
     print('Fetching and adding apt key for Republic Anywhere.')
     add_apt_key()
 
