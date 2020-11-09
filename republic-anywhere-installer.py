@@ -33,7 +33,7 @@ def commit_apt_changes(cache):
     try:
         cache.commit()
     except Exception as arg:
-        print >> sys.stderr, 'Sorry, package instillation failed. Error: [{err}]'.format(err=str(arg))
+        sys.stderr.write('Sorry, package instillation failed. Error: [{err}]'.format(err=str(arg)))
     return
 
 def check_if_anywhere_installed():
